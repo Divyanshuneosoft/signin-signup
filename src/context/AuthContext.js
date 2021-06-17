@@ -39,6 +39,16 @@ export const AuthProvider = ({children})=>{
         }
        
     }
+    async function updateProfile(data,callback){
+      try {
+          if(!currentUser) return;
+           await currentUser.updateProfile(data)
+           return callback(auth.currentUser)
+      } catch (error) { 
+          console.log(error)
+      }
+    }
+ 
     useEffect(()=>{
         const subscribe =  auth.onAuthStateChanged(user=>{
             setCurrentUser(user)
@@ -51,6 +61,7 @@ export const AuthProvider = ({children})=>{
         signIn,
         signUp,
         Logout,
+        updateProfile,
         forgotPassword,
     }
     return (
